@@ -1,0 +1,18 @@
+1：package control：安装
+2：chineselocalization：中文插件
+3：convertToUFT8：中文乱码
+4：SideBarEnhancements：左侧栏增强：视图-侧边栏-显示
+5："dpi_scale": 1.0：解决文件名乱码问题
+6：SublimeLinter：代码检测工具
+7：SublimeLinter-contrib-eslint：js代码检测工具
+8：babel：代码高亮工具
+9：sublime-react-es6：语法提示
+10：HTML-CSS-JS Prettify：代码格式化
+11：jsformat：JS代码格式化
+12：colorPicker：ctrl+shift+c，和convertToUFT8的快捷键冲突，需要修改convertToUFT8的快捷键，进入package，[
+{ "keys": ["ctrl+shift+alt+c"], "command": "convert_to_utf8", "args": {"encoding": "GBK", "stamp": "0" } }
+]
+13：SublimeCodeIntel：代码自动提示，
+
+
+

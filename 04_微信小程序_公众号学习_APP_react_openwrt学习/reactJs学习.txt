@@ -1,0 +1,199 @@
+------------------------------------------------------------------------------------------
+React组件思维：（是单向的数据流组件层次结构）
+1：构建组件：遵循单一职责原则（只做一件事情）
+   1：在每个组件上用盒子框起来 2: 给每一个组件起名字 3：分割组件原则（单一职责原则，如果变得复杂起来则继续分割组件） 4：有些简单的显示不需要构建为组件，可以成为组件的一部分。5：列出组件的父子和兄弟关系。
+2：构建最小化的state（UI交互关系）： DRY原则（Don't Repeat Yourself）：避免重复代码。
+   构建原则：问自己三个问题：问题1：是否可以通过父组件传递props？可以则不使用state。问题2：是否一直是不变的？是则不使用state。问题3：是否可以通过其他的state或props计算得出？是则不使用。
+3：state所在的组建位置（寻找原则）：
+   1：找到需要state的每个组件
+   2：找到这些组件共同的父亲组件
+   3：这个父亲组件需要有一个state
+   4：如果你不能找到一个有意义的父组件，你可以创建一个新的组件只是保持state并让他包含这些组件
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+export default class Index extends React.Component {
+	render() {
+		console.log("abc");
+		return (
+			<div>abc</div>
+		);
+	}
+}
+ReactDOM.render(
+	<Index />,
+	document.getElementById('root')
+);
+
+
+
+
+------------------------------------------------------------------------------------------
+React安装：（https://facebook.github.io/react/docs/installation.html）
+            (http://babeljs.io/docs/setup/#installation)
+            (gitbash工具模拟linux命令行)
+1：windows下安装nodejs（为了使用npm包管理工具安装react）
+2：进入到项目的目录
+3：npm init：设置package.json。注意，name不能叫react，否则会报错。其他都回车即可。
+4：npm install --save react react-dom：安装react
+5：安装babel编译器：
+   npm install --save-dev babel-cli babel-preset-react babel-preset-env
+6：配置文件修改：修改文件名为.babelrc.
+   并改内容为{ "presets": ["react","env"] }
+7：修改package.json：加入："scripts": {    "build": "babel src -d lib"   },
+   编译好的src目录下的js文件输出到lib目录
+8：编译所有js文件：
+   cd /d/React/reactJs
+   npm run build：编译所有js文件到lib目录。
+9：webstorm自动编译选项设置：watcher：program: babel的路径，windows使用babel.cmd命令
+10：webpack配置打包(npm install --save-dev babel-loader babel-core)
+
+------------------------------------------------------------------------------------------
+JSX语法：遇到标签用html解析，遇到{}用js解析，返回一个react元素。例如：const element = <h1>Hello, world!</h1>;
+
+------------------------------------------------------------------------------------------
+组件（components）：
+1：组件名称：以大写开始，表示是组件而不是DOM标签（例如：<Welcome/>：自定义组件 <div/>：html标签
+2：组件类别：分为函数式组件（无state）和类组件（有state和生命周期）
+2：组件引用：可以互相引用其他组件。
+3：组件返回：组件只能返回一个单独的根元素。例如：外面再包一层div
+4：组件渲染：ReactDOM.render()
+5：Props are Read-Only：Props是只读的，不能写。
+   class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+6：State：和props类似，必须使用es6的class声明,是私有的。属于class的新的特性，可以用生命周期函数
+7：this.setState()：和小程序的setdata有点像。只有构造的时候用this.status={XXX};其他地方不能直接调用setState
+8：流程：先调用组件的构造函数，然后调用render渲染，当setState时，重新渲染相关DOM
+9：this.setState()：可能是异步的，所以不能直接依赖当前的state，用第二种形式，带参数，参数为一个回调函数，提供preState
+10：this.setState()：可以单独对变量进行独立设置。
+11：父组件可以把status通过props进行传递给子组件。例如：<FormattedDate date={this.state.date} />
+
+------------------------------------------------------------------------------------------
+事件（events）：
+1：命名规则为驼峰写法：例如：clickBtn
+2：传递的是函数句柄不是字符串：例如：<button onClick={activateLasers}></button>
+3：阻止默认事件不能return false，必须使用e.preventDefault();
+4：绑定事件：方式1：使用this.handleClick = this.handleClick.bind(this);
+   handleClick() {
+    this.setState(prevState => ({
+      isToggleOn: !prevState.isToggleOn
+    }));
+  }
+  <button onClick={this.handleClick}>
+  方式二：属性初始化语法绑定事件：handleClick = () => {
+    console.log('this is:', this);
+  }
+5：条件渲染：
+   方式1：通过prop判断并返回不同的组件。
+          <Greeting isLoggedIn={false} />,
+    if (isLoggedIn) {
+        return <UserGreeting />;
+      }
+      return <GuestGreeting />;
+    }
+   方式2：通过变量保存React变量，并渲染
+    let button = null;
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+   方式3：使用 条件表达式 + && 显示内容
+   {unreadMessages.length > 0 &&
+        <h2>
+          You have {unreadMessages.length} unread messages.
+        </h2>
+      }
+   方式4：condition ? true : false
+   方式5：不渲染：if (!props.warn) {return null;}
+
+
+
+------------------------------------------------------------------------------------------------
+React ES6 Snippets：快捷键
+cdm→  componentDidMount: fn() { ... }
+
+   cdup→  componentDidUpdate: fn(pp, ps) { ... }
+
+     cs→  import cx from 'classnames';
+
+    cwm→  componentWillMount: fn() { ... }
+
+    cwr→  componentWillReceiveProps: fn(np) { ... }
+
+    cwu→  componentWillUpdate: fn(np, ns) { ... }
+
+   cwun→  componentWillUnmount: fn() { ... }
+
+     cx→  cx({ ... })
+
+    fdn→  React.findDOMNode(...)
+
+    fup→  forceUpdate(...)
+
+    gdp→  static defaultProps = { ... } 
+
+    gis→  getInitialState: fn() { return {...} } 
+
+    ism→  isMounted()
+
+  props→  this.props.
+
+     pt→  propTypes { ... }
+
+    rcc→  component skeleton
+
+   refs→  this.refs.
+
+    ren→  render: fn() { return ... }
+
+    rpc→  pure render component skeleton
+
+    rrc→  redux component skeleton
+
+    scu→  shouldComponentUpdate: fn(np, ns) { ... }
+
+    sst→  this.setState({ ... })
+
+  state→  this.state.
+
+
+[
+{
+"keys": [
+"tab"
+], 
+"args": {
+"action": "expand_abbreviation"
+}, 
+"command": "run_emmet_action", 
+"context": [
+{
+"key": "emmet_action_enabled.expand_abbreviation"
+}
+]
+}
+]<Route path="/" component={Home}></Route>
+
+
+
+
+
+
+
+
+
+
+
+
+

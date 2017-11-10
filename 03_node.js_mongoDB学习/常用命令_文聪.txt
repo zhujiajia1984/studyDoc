@@ -1,0 +1,104 @@
+盒子的默认IP地址：192.168.84.1
+
+后门：http://192.168.84.1/aite/zc
+
+或者直接连接串口线进入盒子
+
+SSH帐号：root/nosoup4u
+_______________________________________________________
+
+将CheckU.sh changercroot.sh 放到/root目录下
+
+_______________________________________________________
+
+
+chmod +x CheckU.sh changercroot.sh
+
+./changercroot.sh
+
+查看CheckU进程有没有起来：ps -ef|grep CheckU
+root@ubuntu:~# ps -ef|grep CheckU
+root      5566  5472  0 20:09 ttyS0    00:00:00 grep --color=auto CheckU
+
+如果输出上面，则没有起来，打命令：./CheckU.sh &
+
+如果输出下面，则进程已经起来
+root@ubuntu:~# ps -ef|grep CheckU
+root      5757  5472  0 20:10 ttyS0    00:00:00 /bin/bash ./CheckU.sh
+root      5777  5472  0 20:10 ttyS0    00:00:00 grep --color=auto CheckU
+
+此时直接插入U盘进行升级
+
+
+在下面目录可以查看更新的版本信息
+root@ubuntu:~# cd /aiterw/usbversion/
+root@ubuntu:/aiterw/usbversion# ls
+version1.0.0.txt
+
+
+_______________________________________________________
+
+cup占用率：top
+
+内存使用率：free -m
+
+硬盘的查看：df -Tk -m
+
+_______________________________________________________
+
+线程查看：ps -ef|grep xxxx
+_______________________________________________________
+
+端口查看：netstat -anp|grep 53/80/8080  [53:wifi]
+_______________________________________________________
+
+查看当前有几个设备连上盒子：arp -n
+_______________________________________________________
+
+######日志查看##########################
+cd /var/log/aiterw_logs
+
+查看登录日志：tail -f login20131108.log
+_______________________________________________________
+
+查看流量日志：tail -f flow20131108.log
+_______________________________________________________
+
+查看访问日志：tail -f 20131108.log
+_______________________________________________________
+
+查看定时调度：crontab -e
+_______________________________________________________
+
+修改盒子热点名称
+
+1.临时修改 
+iwconfig wdev0ap0 essid new1_ap_01
+ifconfig wdev0ap0 down
+ifconfig wdev0ap0 up
+iwconfig wdev1ap0 essid new1_ap_02
+ifconfig wdev1ap0 down
+ifconfig wdev1ap0 up
+
+_______________________________________________________
+
+2.永久修改
+vi /root/k3.4.2/8764/wifi_apnew_2apk2.sh
+
+找到
+iwconfig wdev0ap0 essid aiterw01
+修改成
+iwconfig wdev0ap0 essid new_ap_name01
+
+找到
+iwconfig wdev1ap0 essid aiterw02
+修改成
+iwconfig wdev1ap0 essid new_ap_name02
+
+_______________________________________________________
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+--------------------------------------------------------------------------------------------------
+math：
+常用
+1：随机数：Math.randow()：0-1之间的随机小数
+2：随机整数（0-4）：Math.floor(Math.randow()*5)
+Number：
+常用：
+1：toFixed()：舍入到小数点后指定位数，并改为字符串。
+2：toPrecision（）：取指定位数的数字（含整数部分），并改为字符串
+3：toString()：变为字符串
+Data：
+常用：
+参考myapp项目中，wxpay.js
+var myDate = new Date();
+            // var orderNum = myDate.getYear().toString() + myDate.getMonth().toString();
+            var year = myDate.getFullYear().toString();
+            var month = (padNumber((myDate.getMonth() + 1), 2)).toString();
+            var date = (padNumber(myDate.getDate(), 2)).toString();
+            var hour = (padNumber(myDate.getHours(), 2)).toString();
+            var minute = (padNumber(myDate.getMinutes(), 2)).toString();
+            var seconds = (padNumber(myDate.getSeconds(), 2)).toString();
+            var milliseconds = (padNumber(myDate.getMilliseconds(), 3)).toString();
+
+//补0
+function padNumber(num, fill) {
+    //改自：http://blog.csdn.net/aimingoo/article/details/4492592
+    var len = ('' + num).length;
+    return (Array(
+        fill > len ? fill - len + 1 || 0 : 0
+    ).join(0) + num);
+}
+
+//cookie：
+document.cookie；
+
+--------------------------------------------------------------------------------------------------
+window对象：
+全局对象，方法如下：
+1：confirm()：确认弹出框
+2：setInterval()/clearInterval()：以固定的间隔，重复执行函数
+3：setTimeOut()：隔多少时间只执行一次
+4：open()：弹出框
+
+--------------------------------------------------------------------------------------------------
+document对象(window.document)：
+浏览器为每个打开的html文件创建的预定义对象，有很多属性和方法可使用。
+常用方法：
+getElementById()	返回对拥有指定 id 的第一个对象的引用。
+getElementsByName()	返回带有指定名称的对象集合。
+getElementsByClassName()返回带有指定名称的CSS类集合。
+getElementsByTagName()	返回带有指定标签名的对象集合。
+具体见：http://www.w3school.com.cn/jsref/dom_obj_document.asp
+
+
+--------------------------------------------------------------------------------------------------
+dom节点（文档对象模型）：
+1：DOM节点：元素节点（html标签），属性节点（title属性），文本节点（标签之间文本）等。   
+   具体见：http://www.w3school.com.cn/htmldom/dom_nodes.asp
+2：attributes：属性：http://www.w3school.com.cn/jsref/prop_node_attributes.asp
+    var attrs = document.getElementById("option1").attributes;
+    for(var i=0; i<attrs.length; i++)
+    {
+        console.log(attrs[i].name);
+    }
+3：innerHTML/outerHTML：返回指定节点的内部HTML文档/含当前标签和内部html文档
+   console.log(document.getElementById("sample_2").innerHTML);
+4：innerText：返回指定节点的内部文本（无html标签）
+5：nodeName：如果节点是元素节点，则 nodeName 属性返回标签名。
+   如果节点是属性节点，则 nodeName 属性返回属性的名称。
+   对于其他节点类型，nodeName 属性返回不同节点类型的不同名称。
+   http://www.w3school.com.cn/jsref/prop_node_nodename.asp
+6：nodeValue：获取节点值，可用textContent替代。
+7：getAttribute() 方法返回指定属性名的属性值。
+8：addEventListener()：添加事件监听器
+   具体见：http://www.runoob.com/jsref/met-element-addeventlistener.html
+   阻止默认的跳转连接：event.preventDefulat();
+9：appendChild()：添加子DOM节点
+        var tdTest = document.getElementById("tdTest");
+        var innerspan = document.createElement("span");
+        var innerspanText = document.createTextNode("先测试");
+        innerspan.appendChild(innerspanText);
+        innerspan.setAttribute("class","label label-sm label-primary");
+        tdTest.appendChild(innerspan);
+
+--------------------------------------------------------------------------------------------------
+修改CSS属性：
+1：CSS中出现的带“-”的属性，统一用大写字母代替。例如：css中background-color用backgroundColor来代替
+   例如：var tdTest = document.getElementById("tdTest");
+         tdTest.style.backgroundColor = "#DDDDDD"
+2：动态修改CSS属性：添加click等事件。
+    var div1 = document.getElementById("div1");
+    var btn1 = document.getElementById("btn1");
+    btn1.addEventListener("click",function () {
+        div1.style.backgroundColor ="rgb(0,0,255)";
+    })
+   控制显示和隐藏：div1.style.display = "none" / "block"
+
+--------------------------------------------------------------------------------------------------
+
+
+

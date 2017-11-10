@@ -1,0 +1,6 @@
+https://weiquaninfo.cn
+https://api.map.baidu.com
+https://api.weixin.qq.com
+https://restapi.amap.com
+socketºÏ·¨ÓòÃû	
+wss://weiquaninfo.cn

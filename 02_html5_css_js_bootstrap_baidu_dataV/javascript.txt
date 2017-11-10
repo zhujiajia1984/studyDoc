@@ -1,0 +1,93 @@
+-------------------------------------------------------------------------------------------------------------
+html中添加js：
+1：查看浏览器内核：f12，console模式下输入navigator.appVersion即可。
+2：查看浏览器所支持的ECMAScript版本（ES版本），目前浏览器一般支持ES5。最新的可以支持ES6
+3：脚本语言：javascript，通过解释器运行而不需预先编译。所以错误都是在运行中产生的。
+4：运行环境：客户端（web浏览器），浏览器读取并解释JS代码，直接将结果返回给浏览者，不需要从服务器上获取信息。
+5：限制：用户可能禁止js或者设备不支持js，所以重要的验证最好还是要放在服务器端
+6：JS位置：在html文档中，直接添加或者引入外部js文件。
+   直接添加：<script>...</script>
+   外部引入：<script defer type="text/javascript" src="javascripts/test.js">
+7：script的type属性：识别脚本语言，显式的标记脚本语言类型（JS）：<script type="text/javascript">
+8：script的src属性：引入外部脚本：<script type="text/javascript" src="abc.js">
+   作用1：第一次加载后会有缓存，之后再加载速度快
+   作用2：JS代码和H5代码分离
+9：script的defer和async属性：异步加载和执行。
+   一个常用的优化性能的方法是：当脚本不需要立即运行时，在<SCRIPT>标签中设置“defer”属性。 (立即脚本没有被包含在一个function   块中,因此会在加载过程中执行。) 设置“defer”属性后，IE就不必等待该脚本装载和执行完毕。这样页面加载会更快。一般来说，这也   表明立即脚本最好放在function块中，并在 document或者body对象的onload 句柄中处理该函数。在有一些脚本需要依赖用户操作而执行   时----例如点击按钮，或者移动鼠标到某个区域----使用该属性非常有用。但当有一些脚本需要在页面加载过程中或加载完成后执行，使   用defer属性得到的好处就不太大。
+
+-------------------------------------------------------------------------------------------------------------
+变量：
+函数：
+1：声明：function getData(param1, param2){code}
+2：表达式（匿名函数）：var myfun = function(){};   myfun();
+表达式：==、===、++、
+条件语句：if/else
+数组：
+对象：
+预定义对象：navigator对象（浏览器的许多属性展示），document对象
+文档对象模型（DOM）：允许JS访问浏览器中的文档结构。每个文档都是由结构化节点组成。
+事件处理函数：
+方式1：在html中直接使用事件处理：
+<form>
+    <input type="button" value="提交" onclick="window.alert('Hello');window.alert('Hello2');">
+</form>
+方式2：外部JS文件使用事件处理：添加ID->访问元素->赋值函数表达式
+
+------------------------------------------------------------------------------------------------
+1：DOM级别0的事件方式（兼容老式的浏览器）：
+单击事件：onclick事件，和a标签一起使用时需要阻止跳往默认href地址；
+获得焦点和失去焦点：onfocus/onblur
+web页面加载完毕时/离开web页面时：onload/onunload/onbeforeunload
+重置或提交表单事件：onreset/onsubmit
+鼠标移动等事件：onmousedown/...
+
+2：DOM级别2事件方式（addEventLisenter）（新式浏览器，IE9以上）：
+（捕捉阶段和冒泡阶段都可按需使用，IE9以后支持）：
+var hi_button = document.getElementById("sayHello");
+function setDialog() {
+    window.alert("hello world");
+}
+hi_button.addEventListener("click",setDialog, false);   // 添加事件
+hi_button.removeEventListener("click",setDialog, false); // 取消事件
+
+3：DOM级别2事件方式（attachEvent）：
+只可使用在冒泡阶段，并且只能IE9之前的浏览器使用，保证浏览器兼容性。使用方式和addeventlisenter相同。
+
+------------------------------------------------------------------------------------------------------
+event对象：保存事件的相关信息，作为函数参数返回并使用。type属性可区分事件的类型。例：
+function setDialog(event) {
+    window.alert("hello world");
+}
+hi_button.addEventListener("click",setDialog, false);   // 添加事件
+
+------------------------------------------------------------------------------------------------------
+表单使用：
+概念：每次在h5中添加一组form标记，则都将创建一个表单对象，js访问表单方式如下：
+1：使用document对象的表单数组
+2：表单标记中使用name命名，然后使用名字访问表单
+3：表单标记中使用id定义，然后使用document.getElementById访问
+
+表单验证：
+1：本地进行数据校验（正则表达式）
+2：校验通过后提交服务器验证
+
+------------------------------------------------------------------------------------------------------
+JSON：
+1：JSON.stringify()：将json对象字符串化，用于网络传输
+2：JSON.parse()；将字符串解析为json对象
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

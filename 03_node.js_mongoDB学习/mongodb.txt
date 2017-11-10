@@ -1,0 +1,123 @@
+-------------------------------------------------------------------------------------------------------
+安装mongodb
+1：官网下载对应的安装包
+2：解压：tar -zxvf mongodb-linux-x86_64-rhel70-3.4.4.tgz
+3：拷贝到指定目录：mv  mongodb-linux-x86_64-rhel70-3.4.4/ /usr/local/mongodb
+4：加入到环境变量中：
+   vi /etc/profile
+   在最下面加入：
+   export PATH=$PATH:/usr/local/mongodb/bin
+   :wq! #保存退出
+   source /etc/profile  #使配置立即生效
+5：创建一个数据文件目录：mkdir -p /home/mongodb/data/db
+
+-------------------------------------------------------------------------------------------------------
+启动mongodb和配置：
+1：mongod命令（安装目录的bin文件下）：mongod --version
+2：查看所有打开的端口： firewall-cmd --zone=public --list-ports
+   添加：firewall-cmd --zone=public --add-port=28001/tcp --permanent
+   firewall-cmd --zone=public --add-port=29001/tcp --permanent（http服务，端口+1000）
+   更新：firewall-cmd --reload
+3：配置config文件：mongod_config_noPwd.conf
+verbose = true
+logpath = /home/mongodb/log/mongodb.log
+logappend = true
+port = 28001
+journal = true
+fork = true
+dbpath = /home/mongodb/data/db
+rest = true
+
+4：启动数据库（没有验证）：mongod --config /home/mongodb/mongod_config_nopwd.conf
+5：关闭数据库：普通关闭： mongo 127.0.0.1:28001 / use admin / db.shutdownServer()  强制关闭：ps -ef| grep mongod   kill -15 pid
+8：登录数据库：mongo --username "dbadmin" --password "test" 127.0.0.1:28001/admin
+9：可以开始操作
+
+-------------------------------------------------------------------------------------------------------
+mongodb shell（客户端命令）：
+1：mongo命令：启动shell，位于安装目录下的bin目录下，例如：mongo 127.0.0.1:28001 / mongo -u username -p pwd ip:port/db
+2：use命令：切换当前数据库句柄，操作都是基于当前句柄上执行。例：use admin / use test
+3：show命令：显示信息。例如：show dbs：显示数据库列表
+4：exit命令：退出shell命令
+5：log命令：显示内存中日志最后一部分
+6：配置数据库用户账号和权限：
+   新增：createUser命令：例如：use admin
+   db.createUser({user:"testadmin",pwd:"test",roles:["readWrite", "dbAdmin"]})
+   删除：dropUser命令：例如：db.dropUser("testadmin")
+   显示：show users：显示所有用户
+   权限：每个数据库都把用户账号存储在集合system.users集合中。默认安装后会有admin数据库，需要创建用户管理员账户和数据库管理员账户。（用户管理员：创建和配置用户账号 数据库管理员：配置和管理数据库）
+   例如：use admin / db.createUser({user:"useradmin",pwd:"test",roles:["userAdminAnyDatabase"]})
+7：开启用户验证：关闭mongodb进程：kill -15 pid / mongod --config /home/mongodb/mongod_config.conf
+8：用户管理员登录：mongo --username "useradmin" --password "test" 127.0.0.1:28001/admin
+9：创建数据库管理员：use admin / db.createUser({user:"dbadmin",pwd:"test",roles:["readWriteAnyDatabase", "dbAdminAnyDatabase", "clusterAdmin"]})
+10：切换用户：use admin / db.auth("username", "pwd");
+11：数据库管理员登录：mongo --username "dbadmin" --password "test" 127.0.0.1:28001/admin
+12：管理数据库：
+    1：显示数据库列表：show dbs
+    2：切换数据库句柄：use dbname
+    3：创建数据库：use mydb / db.createCollection("myColl")
+    4：删除数据库：use mydb / db.dropDatabase();
+    5：查看数据库信息：db.stats()
+13：管理集合：
+    1：显示集合列表：show collections
+    2：创建集合：createCollection(name, [options])
+    3：删除集合：方式1：db.collectionName.drop();  方式2：var coll = db.getColleciton("name"); / coll.drop();
+       (如果集合都删除了，则数据库也被删除)
+
+
+-------------------------------------------------------------------------------------------------------
+mongodb nodejs编程：
+1：引用：var MongoClient = require('mongodb').MongoClient
+2：数据库连接：
+        var url = "mongodb://" + username + ":" +pwd + "@" + ip + ":" + port + "/admin";
+        console.log(url);
+        MongoClient.connect(url, function (err, db) {
+                // 连接失败
+                if (err) {
+                    console.log(err);
+                    db.close();
+                    res.end("connect failed");
+                    return;
+                }
+                // 连接成功
+                console.log("Connected successfully to server");
+
+                // 关闭数据库
+                db.close();
+            }
+        )
+3：
+
+-------------------------------------------------------------------------------------------------------
+mongodb shell（脚本编程）：
+1：Mongo.getDB(db)：返回一个数据库对象，表示指定的数据库
+2：Mongo(host:port)：返回一个连接对象，连接到指定的主机和端口
+3：connect(host:port/db)：连接到指定的数据库，并返回一个数据库对象
+4：load(path)：加载并运行JS脚本
+5：执行javascript脚本：
+   方式一：--eval：mongo test --eval "printjson(db.getCollectionNames())"
+   方式二：使用命令mongo方式来执行： mongo abc.js def.js
+   方式三：load函数
+
+-------------------------------------------------------------------------------------------------------
+mongodb 基础元素：
+1：数据库（db） > 集合（coll） > 文档（doc）
+2：管理数据库，必须要有clusterAdmin权限的用户才可以。
+3：固定集合：capped collections（超过指定值则删除最老一条数据） 
+4：cursor对象：相当于一个指针（指向结果集/文档），可以通过迭代它来访问数据库中的一组对象
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

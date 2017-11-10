@@ -1,0 +1,35 @@
+
+------------------------------------------------------------------------------------------------------
+安装方式：
+1：使用create-react-app/native安装（目前推荐）
+2：使用dva安装
+3：自己手动配置react,babel和webpack
+安装步骤（create-react-app）：
+1：npm install -g create-react-app
+2：create-react-app antm-demo（或者用手动配置）
+3：npm run start（开始运行）（或者用手动配置）
+4：npm run eject（显示webpack和其他配置）（或者用手动配置）
+5：npm install antd-mobile --save
+6：引入 FastClick.js 并且设置 html meta
+7：引入Promise 
+8：npm install style-loader css-loader --save-dev（解析css）
+9：npm install babel-plugin-import --save-dev（按需加载）
+10：npm install --save react-router-dom（安装路由）
+11：npm install --save reqwest（ajax请求）
+12：npm install --save cors（跨域）
+
+
+------------------------------------------------------------------------------------------------------
+默认样式：
+ant-design-mobile/components/style/themes/default.less中为默认样式
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------
+编译指令：
+默认指令：npm start（debug模式）
+          npm build（release模式，去掉source-map）

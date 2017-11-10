@@ -1,0 +1,165 @@
+--------------------------------------------------------------------------------------
+JQuery简介：http://www.runoob.com/jquery/jquery-intro.html
+jQuery 是一个 JavaScript 库。（轻量级、异步、兼容CSS3，跨浏览器兼容性高）
+jQuery 极大地简化了 JavaScript 编程。
+jQuery 方法可以取值也可以设置值。
+jQuery 方法精简，用链式的.来设置同一对象的方法。因为每次返回的都是对象。
+
+--------------------------------------------------------------------------------------
+jQuery兼容性和插件机制：
+1：2.X以上都不再兼容IE6/7/8，如果要兼容则需要使用1.X版本
+2：屏蔽了浏览器差异（包括http请求、事件、DOM操作）、
+3：插件机制：强大的插件机制
+
+--------------------------------------------------------------------------------------
+jQuery对象和DOM对象转换：
+jQuery对象转成DOM对象： 
+两种转换方式将一个jQuery对象转换成DOM对象：[index]和.get(index); 
+例如： $("#msg")[0]，$("div").eq(1)[0]，$("div").get()[1]，$("td")[5] 
+普通的Dom对象一般可以通过$()转换成jQuery对象。 
+如：$(document.getElementById("msg")) 
+返回的就是jQuery对象，可以使用jQuery的方法。 
+
+在再两者转换前首先我们给一个约定：如果一个获取的是jQuery对象，那么我们在变量前面加上$，如：var $variab = jQuery对象；如果获取的是DOM对象，则与习惯普通一样：var variab = DOM对象；这么约定只是便于讲解与区别，实际使用中并不规定。 
+
+--------------------------------------------------------------------------------------
+加载jQuery：
+1：前端本地加载：<script src="../jquery.min.js" type="text/javascript"></script>
+2：其他加载方式和文件下载：http://jquery.com/download/
+
+--------------------------------------------------------------------------------------
+开始使用jQuery（文档就绪事件）：
+$(document).ready(function(){
+ 
+   // 开始写 jQuery 代码...
+ 
+});
+简洁写法，意义同上：
+
+$(function(){
+ 
+   // 开始写 jQuery 代码...
+ 
+});
+
+具体：http://www.runoob.com/jquery/jquery-syntax.html
+--------------------------------------------------------------------------------------
+jQuery选择器：
+1：选择器允许您对 HTML 元素组或单个元素进行操作。
+2：jQuery 选择器基于元素的 id、类、类型、属性、属性值等"查找"（或选择）HTML 元素。 它基于已经存在的 CSS 选择器，除此之外，它还有一些自定义的选择器。
+3：jQuery 中所有选择器都以美元符号开头：$()
+4：DOM元素选择器：$("")：例如：$("p").hide()：隐藏所有P元素（标签）
+5：id选择器：通过id来选取DOM节点。例：$("#test")
+6：类选择器：通过class属性来选取DOM节点。例如：$(".test")
+7：元素名称和类选择器：例如：$("p.test")：所有p元素下类名为test的节点
+8：属性值选择器：例如：$("p[type=text]")：所有p元素下type属性为text的节点
+9：更多使用：http://www.runoob.com/jquery/jquery-selectors.html
+10：选择元素下的子元素用空格：例如：$("table tr")：找到table下的所有tr
+
+--------------------------------------------------------------------------------------
+jQuery过滤器和获取：
+1：first方法：$("div p").first();获取数组内第一个元素
+2：last方法：$("div p").last();获取数组内最后一个元素
+3：eq方法： $("p").eq(0);获取数组内索引值元素（0开始）\
+4：filter方法；规则筛选： $("p").filter(".intro");返回带有类名 "intro" 的所有 <p> 元素。相当于p.intro
+5：not方法：与 filter() 相反。 $("p").not(".intro");返回不带有类名 "intro" 的所有 <p> 元素。
+
+--------------------------------------------------------------------------------------
+jQuery事件：
+常见 DOM 事件：
+鼠标事件	键盘事件	表单事件	文档/窗口事件
+click	         keypress	submit	         load
+dblclick	keydown	        change	         resize
+mouseenter	keyup	        focus	         scroll
+mouseleave	 	         blur	         unload
+
+事件处理函数写法：
+$("p").click(function(){
+    // 动作触发后执行的代码!!
+});
+
+--------------------------------------------------------------------------------------
+jQuery效果（特效）：
+1：隐藏、显示、切换
+   通过 jQuery，您可以使用 hide() 和 show() 方法来隐藏和显示 HTML 元素，toggle进行自动切换显示和隐藏
+   $("p").hide();
+   $("p").show();
+   $("p").toggle();
+http://www.jquery123.com/hide/
+2：淡入淡出，滑动、动画、回调函数
+3：链接：对指定元素进行多个操作，可以使用链接，不需多次查询。
+   例如：$("#p1").css("color","red").slideUp(2000).slideDown(2000);
+
+--------------------------------------------------------------------------------------
+jQuery html DOM操作：
+1：获得内容：text()、html()和val()
+   例如：$("#test").text()：元素下的合并文本。val：input和button的value
+2：获取属性：attr()。例如：$("#runoob").attr("href")
+3：设置内容：text(str)、html(str)和val(str)
+4：设置属性（支持设置多个属性）：attr(strName, strValue)：
+   例如：
+      $("#runoob").attr({
+        "href" : "http://www.runoob.com/jquery",
+        "title" : "jQuery 教程"
+    });
+5：添加新元素/内容：
+   append()、prepend()、after()、before()
+6：添加多个新元素。
+   function appendText()
+   {
+       var txt1="<p>文本。</p>";              // 使用 HTML 标签创建文本
+       var txt2=$("<p></p>").text("文本。");  // 使用 jQuery 创建文本
+       var txt3=document.createElement("p");
+       txt3.innerHTML="文本。";               // 使用 DOM 创建文本 text with DOM
+       $("body").append(txt1,txt2,txt3);        // 追加新元素
+    }
+
+7：删除元素：remove：删除被选元素及其子元素
+             remove(strS)：删除指定的元素
+             empty：删除被选元素的所有子元素
+8：操作CSS：
+   addClass() - 向被选元素添加一个或多个类：例如 $("#div1").addClass("important blue");
+   removeClass() - 从被选元素删除一个或多个类：同上
+   toggleClass() - 对被选元素进行添加/删除类的切换操作：同上
+   css() - 设置或返回样式属性(style属性值)
+   css("propertyname")：获取style属性值：$("p").css("background-color");
+   css("propertyname","value")：设置单个属性值
+   ss({"propertyname":"value","propertyname":"value",...});设置多个属性值
+--------------------------------------------------------------------------------------
+jQuery 遍历：
+1：parent() 方法返回被选元素的直接父元素。
+2：parents() 方法返回被选元素的所有祖先元素，它一路向上直到文档的根元素 (<html>)。可选参数
+3：parentsUntil() 方法返回介于两个给定元素之间的所有祖先元素。
+4：。。。
+
+--------------------------------------------------------------------------------------
+jQuery AJAX：
+1：load方法：方法从服务器加载数据，并把返回的数据放入被选元素中（使用get方式）
+$(selector).load(URL,data,callback);
+$.get();$.post()
+必需的 URL 参数规定您希望加载的 URL。
+可选的 data 参数规定与请求一同发送的查询字符串键/值对集合。
+可选的 callback 参数是 load() 方法完成后所执行的函数名称。
+   $("button").click(function(){
+  $("#div1").load("demo_test.txt",function(responseTxt,statusTxt,xhr){
+    if(statusTxt=="success")
+      alert("外部内容加载成功!");
+    if(statusTxt=="error")
+      alert("Error: "+xhr.status+": "+xhr.statusText);
+  });
+});
+
+2：$.get和$.post方法：
+
+
+--------------------------------------------------------------------------------------
+简写冲突处理：
+http://www.runoob.com/jquery/jquery-noconflict.html
+
+--------------------------------------------------------------------------------------
+触发控件的DOM方法：
+$("#aaa").trigger("focus")
+
+
+
+
