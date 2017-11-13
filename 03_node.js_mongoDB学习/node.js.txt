@@ -180,6 +180,7 @@ app.use(morgan());
    cp mkreleasehdr.sh redis-benchmark redis-check-aof redis-check-rdb redis-cli redis-sentinel redis-server redis-trib.rb /usr/local/redis/bin/
 7：修改redis.conf配置文件，把daemonize 改为 yes ，让redis在后台运行
 8：启动服务端：redis-server /usr/local/redis/etc/redis.conf
+   关闭服务端：redis-cli进入后shutdown
 9：查看进程：ps -ef | grep redis
 10：客户端登录测试：redis-cli 然后auth 密码
     查看redis版本号：info

@@ -1,6 +1,6 @@
 智企云服务号：
 appid: wxaed97ec85f7517ba
-appsecret：0511cad5220c92c687df44daa5081dd7
+appsecret：fecd688110e195c4ea0e9f3d97797d44
 
 
 祝佳佳智企云openid：oMMPq0PHo2auSfAIDPcHoBcOh_ZQ

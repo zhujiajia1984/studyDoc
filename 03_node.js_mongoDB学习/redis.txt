@@ -1,0 +1,44 @@
+-------------------------------------------------------------------------------------------
+安装redis缓存数据库：
+1：下载文件：wget http://download.redis.io/releases/redis-3.2.8.tar.gz
+2：解压缩：tar -zxvf redis-3.2.8.tar.gz
+3：编译源码：cd redis-3.2.8.tar.gz
+   make
+4：安装：make install
+5：查看重要文件：服务端文件：src/redis-server，客户端文件：src/redis-cls，默认配置文件：redis.conf
+6：源码编译的都需要将可执行文件放置在$PATH环境目录下，便于以后执行程序时可以不用输入完整的路径
+   将redis-2.8.19文件夹下的redis.conf复制到/usr/local/redis/etc/，并将src目录下的7个命令文件（绿色的），移动到/usr/local/redis/bin/
+   mkdir -p /usr/local/redis/bin
+   mkdir -p /usr/local/redis/etc
+   cp redis.conf /usr/local/redis/etc/
+   cd src
+   cp mkreleasehdr.sh redis-benchmark redis-check-aof redis-check-rdb redis-cli redis-sentinel redis-server redis-trib.rb /usr/local/redis/bin/
+7：修改redis.conf配置文件，把daemonize 改为 yes ，让redis在后台运行
+8：启动服务端：redis-server /usr/local/redis/etc/redis.conf
+9：查看进程：ps -ef | grep redis
+10：客户端登录测试：redis-cli 然后auth 密码
+    查看redis版本号：info
+    得到键值：get key
+11：安装nodejs中的redis扩展模块：node_redis安装
+    npm install redis  /  npm -g install redis
+12：设置密码：打开redis.conf文件，找到requirepass，取消注释，设置密码为:porschev
+
+redis报错：MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk
+请在/etc/sysctl.conf 添加一项 'vm.overcommit_memory = 1' ，然后重启（或者运行命令'sysctl vm.overcommit_memory=1' ）使其生效。
+
+
+使用redis缓存数据库：（createClient、set、get、expire）
+1：参考redis.js文件
+-------------------------------------------------------------------------------------------
+Persistence（持久化）：保存到本地文件,为了实现其卓越的性能， Redis 采用运行在内存中的数据集工作方式. 根据您的使用情况， 您可以每隔一定时间将数据集导出到磁盘，或者追加到命令日志中。您也可以关闭持久化功能，将Redis作为一个高效的网络的缓存数据功能使用.
+
+Set命令和GET命令：字符串
+INCR key：原子操作避免竞争，用于计数
+GetSet命令：为key设置新值并且返回原值
+MSET和MGET命令：可以一次存储或获取多个key对应的值
+exists和del命令
+expire和PERSIST命令；过期时间设置和取消
+
+
+
+
