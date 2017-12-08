@@ -1,6 +1,14 @@
 -------------------------------------------------------------------------------------------------------
+yum安装：
+0：centos安装好后自带yum：查看rpm -qa|grep yum，卸载系统安装的yum
+1：官网：http://yum.baseurl.org/(菜鸟：http://www.runoob.com/linux/linux-yum.html)
+2：源码下载：wget http://yum.baseurl.org/download/3.4/yum-3.4.3.tar.gz
+3：
+
+
+-------------------------------------------------------------------------------------------------------
 安装mongodb
-1：官网下载对应的安装包
+1：官网下载对应的安装包（https://docs.mongodb.com/manual/tutorial/install-mongodb-on-red-hat/）
 2：解压：tar -zxvf mongodb-linux-x86_64-rhel70-3.4.4.tgz
 3：拷贝到指定目录：mv  mongodb-linux-x86_64-rhel70-3.4.4/ /usr/local/mongodb
 4：加入到环境变量中：
