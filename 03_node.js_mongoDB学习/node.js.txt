@@ -1,3 +1,19 @@
+-----------------------------------------------------------------------------------------------------------------------
+模块化升级和安装nodejs
+0：查看记录：npm view 包名 version（查看version字段，最新版本）
+1：查看npm版本：npm -v
+   更新npm：npm install npm@latest -g
+   文档：https://docs.npmjs.com/getting-started/installing-node
+2：npm安装全局目录：npm config get prefix查看，具体：https://docs.npmjs.com/getting-started/fixing-npm-permissions
+3：查看帮助：包名 help
+4：升级包（全局）：npm update -g 包名
+5：升级包（本地）：npm update --save-dev 包名
+6：使用n模块升级和管理nodejs版本：http://www.jb51.net/article/98153.htm
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
 windows下查看进程：netstat -ano，找到端口号，记录PID
 在进程管理中，详细页中，删除PID即可
 vi进入文件，i进入编辑模式，esc退出编辑模式，:q!不保存退出 :wq保存并退出

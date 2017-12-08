@@ -1,5 +1,19 @@
 
 -----------------------------------------------------------------------------------------
+使用方法：
+1：adb devices查看设备（查看模拟器或者真机是否上线）
+2：react-native run-android
+3：模拟器开发者菜单：ctrl+m
+4：执行react-native init testApp初始化项目
+5：package.json："debug": "node node_modules/react-native/local-cli/cli.js run-android"
+6：双击R即可刷新页面
+7： 真机调试：长按返回键进入开发者菜单
+
+
+
+
+
+-----------------------------------------------------------------------------------------
 基本内置组件：
 1：基本组件：View、Text、Image、TextInput、ScrollView、Button
 2：界面组件：Picker（类似下拉选择）、Slider（滑动进度选择）、Switch（开关）
