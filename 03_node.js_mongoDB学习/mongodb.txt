@@ -1,9 +1,37 @@
 -------------------------------------------------------------------------------------------------------
-yum安装：
+windows本地安装：
+1：官网下载
+2：默认安装：并添加环境变量
+3：创建数据目录：D:\Project\mongodb\data\db
+   创建日志目录：D:\Project\mongodb\data\log
+   创建配置文件：D:\Project\mongodb\mongod.cfg并配置（详见：https://docs.mongodb.com/manual/reference/configuration-options/#configuration-file）
+   内容：systemLog:
+    destination: file
+    path: D:\Project\mongodb\data\log\mongod.log
+storage:
+    dbPath: D:\Project\mongodb\data\db
+4：安装服务（必须是cmd的admin进入）："C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --config "D:\Project\mongodb\mongod.cfg" --install（必须要用此全路径命令，否则会有问题）
+5：启动服务（关闭服务）：net start/stop MongoDB
+6：删除服务："C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --remove
+
+-------------------------------------------------------------------------------------------------------
+yum安装(centos系统安装mongodb)：
 0：centos安装好后自带yum：查看rpm -qa|grep yum，卸载系统安装的yum
 1：官网：http://yum.baseurl.org/(菜鸟：http://www.runoob.com/linux/linux-yum.html)
-2：源码下载：wget http://yum.baseurl.org/download/3.4/yum-3.4.3.tar.gz
-3：
+2：建立下载仓库文件：/etc/yum.repos.d/mongodb-org-3.6.repo
+3：内容为：
+   [mongodb-org-3.6]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.6/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc
+4：开始安装：sudo yum install -y mongodb-org
+5：启动：sudo service mongod start
+6：验证是否启动成功：检查日志文件： /var/log/mongodb/mongod.log中是否有一条记录：[initandlisten] waiting for connections on port <port> 端口是在/etc/mongod.conf中定义的，默认27017
+7：设置开机启动：sudo chkconfig mongod on
+8：停止：sudo service mongod stop
+9：重启：sudo service mongod restart
 
 
 -------------------------------------------------------------------------------------------------------
@@ -68,9 +96,12 @@ mongodb shell（客户端命令）：
     5：查看数据库信息：db.stats()
 13：管理集合：
     1：显示集合列表：show collections
-    2：创建集合：createCollection(name, [options])
+    2：创建集合：方式一：当数据被插入的时候，如果集合不存在，则创建。db.myNewCollection2.insertOne( { x: 1 } )db.myNewCollection3.createIndex( { y: 1 } )
+       方式二：显示创建（可指定集合参数）：createCollection(name, [options]) 
     3：删除集合：方式1：db.collectionName.drop();  方式2：var coll = db.getColleciton("name"); / coll.drop();
        (如果集合都删除了，则数据库也被删除)
+14：管理视图（View,3.4新增，只读视图）
+    1：简化逻辑
 
 
 -------------------------------------------------------------------------------------------------------
