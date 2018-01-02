@@ -13,6 +13,8 @@ storage:
 4：安装服务（必须是cmd的admin进入）："C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --config "D:\Project\mongodb\mongod.cfg" --install（必须要用此全路径命令，否则会有问题）
 5：启动服务（关闭服务）：net start/stop MongoDB
 6：删除服务："C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --remove
+7：启动mongo shell：mongo命令即可
+8：use admin;
 
 -------------------------------------------------------------------------------------------------------
 yum安装(centos系统安装mongodb)：
@@ -32,6 +34,13 @@ gpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc
 7：设置开机启动：sudo chkconfig mongod on
 8：停止：sudo service mongod stop
 9：重启：sudo service mongod restart
+10：日志文件：/var/log/mongodb/mongod.log
+    数据文件：/var/lib/mongo
+    配置文件：/etc/mongod.conf
+11：配置远程连接：打开防火墙端口：27017
+12：创建管理员：启动mongdb，不使用验证（https://docs.mongodb.com/manual/tutorial/enable-authentication/#user-administrator）启动mongo shell：直接执行mongo即可进入shell（需要配置环境变量）输入db回车，显示当前所在的数据库。输入show dbs显示所有数据库
+13：
+14：
 
 
 -------------------------------------------------------------------------------------------------------
