@@ -6,8 +6,9 @@ doublecom2017
 多倍通Hi游吧小程序：
 zjj@doublecom.net
 doublecom2017
+APPID:wx65423a2f6908bc55
 
-多倍通Hi游吧小程序2（服务号认证）：
+多倍通Hi游吧+小程序（服务号认证）：
 18516748631@qq.com
 doublecom2017
 
