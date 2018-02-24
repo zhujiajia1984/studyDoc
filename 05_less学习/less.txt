@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+webpack解析less：
+版本问题：安装2.7.2，不要安装3.0.1最新版本，否则会有问题(length报错)
+问题：{
+                    loader: "less-loader",
+                    options: {
+                        paths: [
+                            path.resolve(__dirname, "node_modules/antd")
+                        ],
+                        javascriptEnabled: true
+                    }
+                    // options: {
+                    //     modifyVars: {
+                    //         '@nice-blue': 'red'
+                    //     }
+                    // }
+                },
+1：paths解决了@import必须less后缀的问题；
+2：javascriptEnabled: true解决了打开内联js开关
+3：modifyVars：解决了动态修改less变量的问题

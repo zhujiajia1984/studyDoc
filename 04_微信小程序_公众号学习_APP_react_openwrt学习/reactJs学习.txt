@@ -38,7 +38,8 @@ React安装：（https://facebook.github.io/react/docs/installation.html）
 3：npm init：设置package.json。注意，name不能叫react，否则会报错。其他都回车即可。
 4：npm install --save react react-dom：安装react
 5：安装babel编译器：
-   npm install --save-dev babel-cli babel-preset-react babel-preset-env
+   npm install --save-dev babel-loader babel-core
+   npm install --save-dev babel-preset-react babel-preset-env
 6：配置文件修改：修改文件名为.babelrc.
    并改内容为{ "presets": ["react","env"] }
 7：修改package.json：加入："scripts": {    "build": "babel src -d lib"   },
