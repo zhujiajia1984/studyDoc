@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------------
+安装nginx：
+1：参考：http://nginx.org/en/linux_packages.html
+运行nginx：
+1：参考：http://nginx.org/en/docs/beginners_guide.html
+2：帮助；nginx -h
+3：查看是否启动：ps -ef|grep nginx
+4：启动（使用默认配置文件）：nginx
+5：其他：nginx -s quit/stop/reload/reopen
+   参考：http://nginx.org/en/docs/beginners_guide.html#control
+6：配置文件修改后，只有reload或重启才能生效
+
+
+---------------------------------------------------------------------------------
+nginx反向代理配置：
+1：参考https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
+2：外网打开80端口，然后配置文件：
+3：通过外网80端口，不同的域名映射不同的nodejs服务（内网端口不同）。
+server {
+    listen 80;
+    server_name test.weiquaninfo.cn default_server;
+    location / {
+        proxy_pass http://127.0.0.1:18159;
+    }
+}
+server {
+    listen 80;
+    server_name weiquaninfo.cn www.weiquaninfo.cn;
+    location / {
+        proxy_pass http://127.0.0.1:18000;
+    }
+}

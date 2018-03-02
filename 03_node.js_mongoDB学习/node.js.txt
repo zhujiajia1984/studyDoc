@@ -1,5 +1,12 @@
 ------------------------------------------------------------------------------------------------
-模块化升级和安装nodejs（centos系统可使用自带yum工具安装nodejs）
+使用babel支持es6：
+1：参阅：http://babeljs.io/docs/setup/#installation
+2：安装：npm install --save-dev babel-core babel-preset-env
+3：package.json中加入babel配置："babel":{...}
+4：app.js中引入：require("babel-core").transform("code");
+
+------------------------------------------------------------------------------------------------
+模块化升级和安装nodejs（centos系统可使用自带yum工具安装nodejs，参考https://nodejs.org/en/download/package-manager/，升级参考http://man.linuxde.net/yum）
 0：查看记录：npm view 包名 version（查看version字段，最新版本）
 1：查看npm版本：npm -v
    查看nodejs版本： node -v
