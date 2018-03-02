@@ -1,6 +1,7 @@
 ---------------------------------------------------------------------------------
 安装nginx：
 1：参考：http://nginx.org/en/linux_packages.html
+   yum配置文件：/etc/yum.repos.d/nginx.repo
 运行nginx：
 1：参考：http://nginx.org/en/docs/beginners_guide.html
 2：帮助；nginx -h
