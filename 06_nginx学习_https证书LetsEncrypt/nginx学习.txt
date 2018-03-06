@@ -31,3 +31,17 @@ server {
         proxy_pass http://127.0.0.1:18000;
     }
 }
+
+---------------------------------------------------------------------------------
+nginx https配置：
+1：参考：http://nginx.org/en/docs/http/ngx_http_ssl_module.html
+2：cert为nginx安装目录下新建目录，里面存放证书文件
+server {
+    listen 443;
+    ssl_certificate   cert/214047710730603.pem;
+    ssl_certificate_key  cert/214047710730603.key;
+}
+
+
+
+

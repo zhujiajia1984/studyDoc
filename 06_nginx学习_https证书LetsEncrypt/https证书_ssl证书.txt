@@ -1,0 +1,11 @@
+
+------------------------------------------------------------------------------------------------Let's Encrypt免费证书：
+1：参考网站：https://letsencrypt.org/  和 https://certbot.eff.org/
+2：使用certbot管理证书，文档：https://certbot.eff.org/docs/
+3：安装：https://certbot.eff.org/#centosrhel7-other
+4：坑：https://niuhp.com/other/https-certbot.html
+5：查看帮助：certbot --help all  或 certbot --help
+6：生成证书（手动模式）：
+   certbot certonly --manual
+   自己在指定url中生成文件并填充内容
+7：更新证书（2018-06-04）：https://certbot.eff.org/docs/using.html#re-creating-and-updating-existing-certificates
