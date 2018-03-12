@@ -1,13 +1,36 @@
 
 
--------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
 docker安装：
 1：参考：https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository
 2：首先安装三个包：yum install -y yum-utils device-mapper-persistent-data lvm2
 3：配置仓库配置文件：yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 4：安装docker（最新版本）：yum install -y docker-ce
 5：启动docker：systemctl start docker
-6：查看版本和帮助：docker version  / -h
+6：查看版本和帮助：docker --version / -v / version  / -h
 7：运行检测容器（判断是否安装成功）：sudo docker run hello-world
 8：不想用sudo方式（非必须）：参考：https://docs.docker.com/install/linux/linux-postinstall/
-9：
+9：查看已下载的image（镜像）：docker image ls / docker images
+10：查看容器：docker container ls（当前运行）
+docker container ls --all（所有的，包含当前运行）
+docker container ls -a -q （所有的，包括静默模式）
+11：镜像加速：创建配置文件：/etc/docker/daemon.json
+    {
+  "registry-mirrors": ["https://1z33ae6a.mirror.aliyuncs.com"]
+}
+    systemctl daemon-reload
+    systemctl restart docker
+12：docker pull命令：https://docs.docker.com/edge/engine/reference/commandline/pull/
+    例如：docker pull centos（lastest）   /  docker pull ubuntu:14.04:
+13：docker pull centos
+14：新建并启动容器：docker run -d -i -t centos /bin/bash（后台运行）
+    进入容器：docker exec -i -t (containerID) /bin/bash 
+    删除容器：docker container rm (containerID) （加上-f可删除运行中容器）
+
+
+-----------------------------------------------------------------------------------------------
+创建自己的Image（Dockfile）
+1：参考：https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+   https://docs.docker.com/engine/reference/builder/
+2：
+    
