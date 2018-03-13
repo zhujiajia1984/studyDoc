@@ -1,6 +1,54 @@
 
 
 -----------------------------------------------------------------------------------------------
+数据卷（Volume）
+0：参考：https://docs.docker.com/engine/reference/commandline/volume_create/
+1：独立操作：docker volume create my-vol  /  docker volume ls  / docker volume inspect my-vol / 
+    docker volume rm my-vol
+2：创建容器的数据卷挂载点：docker run -d -t -i --mount source=myapp,target=/home/myapp  --name mycontainer nodejs /bin/bash
+   查看容器挂载的数据卷：docker inspect mycontainer
+3：需要把文件拷贝到宿主机目录：/var/lib/docker/volumes/myapp/_data中，和container中同步
+4：先停止并删除container后，才能删除volume，清理无用的volume命令：docker volume prune
+
+
+-----------------------------------------------------------------------------------------------
+多阶段构建dockfile（multi-stage builds）
+1：参考：https://docs.docker.com/develop/develop-images/multistage-build/
+2：From centos as base
+   ...
+   From name as nodejs
+3：可以让构建停止在某一个阶段：docker build --target base -f ./server.txt -t base .
+   也就是说执行完base阶段的任务后停止。
+
+
+-----------------------------------------------------------------------------------------------
+创建自己的Image（Dockfile）
+1：创建.txt文件，并使用sublimeText的dockerfile高亮插件并选择dockerfile格式；
+2：在一个新的目录中：docker build -f ./base.txt -t base:latest --no-cache .
+   docker build -f ./nodejs.txt -t nodejs .
+   docker build -f ./server.txt -t server .
+3：创建container：docker run -d -i -t --name webcontainer server /bin/bash （创建后台）
+   启动服务则使用：docker run -d -p 3000:3000 --name webcontainer server
+4：进入container：docker exec -i -t webcontainer /bin/bash
+5：创建应用：
+   0：cd /home
+   1：npm install express-generator -g
+   2：express --view=ejs myapp
+   3：WORKDIR /home/myapp
+   4：npm --save install
+   5：npm start
+6：最后运行：docker run -d -p 3000:3000 --name webserver
+
+-----------------------------------------------------------------------------------------------
+阿里云镜像：
+1：参考 https://cr.console.aliyun.com/?spm=5176.2020520001.0.0.QKsNxU#/dockerImage/cn-shanghai/zhujiajia/docker_repo/detail
+2：上传：sudo docker login --username=zhujiajia2003@163.com registry-vpc.cn-shanghai.aliyuncs.com
+sudo docker tag [ImageId] registry-vpc.cn-shanghai.aliyuncs.com/zhujiajia/nodejs:[镜像版本号]
+sudo docker push registry-vpc.cn-shanghai.aliyuncs.com/zhujiajia/nodejs:[镜像版本号]
+3：拉取：sudo docker login --username=zhujiajia2003@163.com registry-vpc.cn-shanghai.aliyuncs.com
+   sudo docker pull registry.cn-shanghai.aliyuncs.com/zhujiajia/nodejs:1.0
+
+-----------------------------------------------------------------------------------------------
 docker安装：
 1：参考：https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository
 2：首先安装三个包：yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -14,6 +62,7 @@ docker安装：
 10：查看容器：docker container ls（当前运行）
 docker container ls --all（所有的，包含当前运行）
 docker container ls -a -q （所有的，包括静默模式）
+查看空间占用：docker system df
 11：镜像加速：创建配置文件：/etc/docker/daemon.json
     {
   "registry-mirrors": ["https://1z33ae6a.mirror.aliyuncs.com"]
@@ -23,14 +72,33 @@ docker container ls -a -q （所有的，包括静默模式）
 12：docker pull命令：https://docs.docker.com/edge/engine/reference/commandline/pull/
     例如：docker pull centos（lastest）   /  docker pull ubuntu:14.04:
 13：docker pull centos
-14：新建并启动容器：docker run -d -i -t centos /bin/bash（后台运行）
+14：新建并启动容器：docker run -d -i -t --name mycontainer centos /bin/bash（后台运行）
     进入容器：docker exec -i -t (containerID) /bin/bash 
+    终止容器（启动/重启）：docker container stop containerID（start/restart）
     删除容器：docker container rm (containerID) （加上-f可删除运行中容器）
+15：查看中间层镜像：docker image ls -a（一般为依赖镜像）
+16：删除镜像： docker image rm
 
 
 -----------------------------------------------------------------------------------------------
-创建自己的Image（Dockfile）
+centos安装软件
 1：参考：https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
    https://docs.docker.com/engine/reference/builder/
-2：
+1：先配置阿里云镜像加速
+2：从dockerHub上拉取centos系统：docker pull centos
+3：安装epel源：yum -y install epel-release  可重置缓存：yum clean all && yum makecache
+4：查看epel源：yum repolist
+4：安装sudo和其他一些工具：yum -y install sudo
+   安装查看系统版本命令：yum -y install redhat-lsb
+   安装ifconfig：yum -y install net-tools
+   安装vim：yum -y install vim
+5：更新yum仓库：yum -y update
+6：更新版本：curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+7：安装nodejs指定或最新版本：yum -y install nodejs
+8：
+
+
+
+
+
     
