@@ -1,6 +1,27 @@
 
 
 -----------------------------------------------------------------------------------------------
+docker compose（批量启动容器并管理启动参数）
+1：安装：参考：https://github.com/docker/compose/releases
+   curl -L https://github.com/docker/compose/releases/download/1.20.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
+   docker-compose -v
+2：删除：sudo rm /usr/local/bin/docker-compose
+3：教程：https://docs.docker.com/compose/overview/#compose-documentation
+   https://docs.docker.com/compose/compose-file/
+4：中文教程：https://www.jianshu.com/p/2217cfed29d7
+可以看到一份标准配置文件应该包含 version、services、networks 三大部分，在 services 标签下的第二级标签是 web，这个名字是用户自己自定义，它就是服务名称。
+image：使用镜像产生容器
+build：使用dockfile构建并产生容器
+command：可以覆盖容器启动后默认执行的命令
+ports：映射端口
+networks：网络配置
+depond_on：启动顺序配置
+volumes：在services下面，挂载数据卷或者主机目录，（注意必须version:3.2才能不报错）
+5：配置好yml文件后，在compose项目所在目录执行：docker-compose up -d
+
+
+-----------------------------------------------------------------------------------------------
 数据卷（Volume）
 0：参考：https://docs.docker.com/engine/reference/commandline/volume_create/
 1：独立操作：docker volume create my-vol  /  docker volume ls  / docker volume inspect my-vol / 
@@ -41,6 +62,11 @@
    4：npm --save install
    5：npm start
 6：最后运行：docker run -d -p 3000:3000 --name webserver
+7：CMD命令：只能有一个，如果多个取最后一个。可单独使用，也可和ENTRYPOINT命令混合使用。当用户在docker run 命令时指定了命令，则CMD命令被覆盖不起效。CMD作为默认命令，可覆盖。CMD和RUN的区别是，RUN命令将会构建一层并build，CMD不会。
+8：替换/etc/redis.conf中内容：sed 's/被替换的字符串/新的字符串/g'
+   参考：http://man.linuxde.net/sed
+   sed -i "s/bind 127.0.0.1/# bind 127.0.0.1/" /etc/redis.conf
+   sed -i "s/# requirepass foobared/requirepass zjj15202185069/" /etc/redis.conf
 
 -----------------------------------------------------------------------------------------------
 阿里云镜像：
@@ -63,7 +89,7 @@ docker安装：
 8：不想用sudo方式（非必须）：参考：https://docs.docker.com/install/linux/linux-postinstall/
 9：查看已下载的image（镜像）：docker image ls / docker images
 10：查看容器：docker container ls（当前运行）
-docker container ls --all（所有的，包含当前运行）
+docker container ls -a（所有的，包含当前运行）
 docker container ls -a -q （所有的，包括静默模式）
 查看空间占用：docker system df
 11：镜像加速：创建配置文件：/etc/docker/daemon.json
