@@ -5,10 +5,13 @@
 0：参考：https://docs.docker.com/engine/reference/commandline/volume_create/
 1：独立操作：docker volume create my-vol  /  docker volume ls  / docker volume inspect my-vol / 
     docker volume rm my-vol
-2：创建容器的数据卷挂载点：docker run -d -t -i --mount source=myapp,target=/home/myapp  --name mycontainer nodejs /bin/bash
+2：创建容器的数据卷挂载点：docker run -d -t -i --mount source=myapp,target=/home/myapp  --name myweb server /bin/bash
    查看容器挂载的数据卷：docker inspect mycontainer
 3：需要把文件拷贝到宿主机目录：/var/lib/docker/volumes/myapp/_data中，和container中同步
 4：先停止并删除container后，才能删除volume，清理无用的volume命令：docker volume prune
+5：拷贝代码目录：cp -r /home/myapp/  /var/lib/docker/volumes/myapp/_data/
+6：npm查看版本：cnpm info cors versions
+7：当启动容器时，新建一个volume时，将会把容器当前目录的内容拷贝到指定的数据卷，然后再人工把需要拷贝的资料拷贝到数据卷即可。
 
 
 -----------------------------------------------------------------------------------------------
