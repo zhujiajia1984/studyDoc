@@ -4,11 +4,99 @@
 1：官网：https://www.mongodb.com/
 2：文档：https://docs.mongodb.com/
 3：版本：https://www.mongodb.com/what-is-mongodb
-4：视频教学：360收藏
-5：
+4：概念：具有扩展性和灵活性的文档型数据库
+5：特性1：类JSON格式文档、数据结构可以灵活改变（无限层次）；
+6：特性2：文档模型映射到程序中的对象，使coding更容易；
+7：特性3：提供了强大的临时查询，索引和实时聚合功能
+8：特性4：核心是分布式数据库（集群）、快速读写、低廉成本
+9：特性5：免费和开源，使用js语法（shell）
+10：架构：参考：https://www.mongodb.com/mongodb-architecture
+
+-------------------------------------------------------------------------------------------------------
+dockerhub安装(robo3T)：
+1：从dockerhub上拉取mongo：docker pull mongo
+2：使用docker-compose启动。
+3：显示版本：执行命令：mongo，初始化并进入shell。
+4：使用robo3T客户端连接mongodb数据库，并执行shell操作
+
+-------------------------------------------------------------------------------------------------------
+文档介绍：
+1：文档value：bson值多种类型
+2：文档field字段名：不能重复
+3：文档field字段最大值：有索引的文档有最大值限制，1024个字节
+4：文档Dot Notation（点操作符）：作用1：获得数组值"<array>.<index>" 作用2：获得嵌入的文档属性名"<embedded document>.<field>"
+5：文档限制：大小限制：大小不超过16M，
+6：文档字段顺序：一般按照写入顺序来，除了2个特殊情况：_id总是第一个字段；重命名字段名称将会导致重新排序
+7：文档特殊字段：_id
+8：文档特殊结构：查询和过滤、更新和索引
+
+
+-------------------------------------------------------------------------------------------------------
+mongodb Shell操作：
+1：数据库（database） > 集合（collection） > 文档（document） > Bson
+2：mongo命令：进入shell, 查看版本：db.version()， db命令：使用默认的test数据库
+3：use命令：切换当前数据库句柄，操作都是基于当前句柄上执行。例：use admin / use test，此事db变量则会指向当前数据库
+4：show命令：显示信息。
+   1：show dbs：显示数据库列表。admin数据库：管理系统用户账号和权限等信息（不要乱动）。local数据库：系统内部使用（        不要乱动）。config数据库：系统内部使用（不要乱动）
+   2：show collections：显示数据库下所有集合
+5：管理数据库：
+    1：显示数据库列表：show dbs
+    2：切换数据库句柄：use dbname：可use不存在的库(隐式只存在于内存，只有当创建集合或文档时，再创建实体文件。)
+    3：创建数据库：use mydb / db.createCollection("myColl")：显示创建集合，即可创建库（当集合都被删除后，库也被删）
+       传统数据库提前创建表，是因为要先定义表结构，然后nosql的mongo由于文档可扩展的，所以没有必要建立空的集合，当数据被创建时再隐式创建，       除非要对集合进行属性设置
+    4：删除数据库：use mydb / db.dropDatabase();
+    5：查看数据库信息：db.stats()
+    6：帮助：db.help()
+6：管理集合：
+    1：显示集合列表：show collections
+    2：创建集合：方式一：隐式的，用集合名称。当数据被插入的时候，如果集合不存在，则创建。db.myNewCollection2.insertOne( { x: 1 } )db.myNewCollection3.createIndex( { y: 1 } )
+       方式二：显示创建，用函数创建（可指定集合参数）：createCollection(name, [options]) 
+    3：删除集合：方式1：db.collectionName.drop();  方式2：var coll = db.getColleciton("name"); / coll.drop();
+       (如果集合都删除了，则数据库也被删除，如果数据删除了，则集合也被删除）
+7：管理文档：
+   1：创建文档：insert（不常用）、insertOne、insertMany
+      _id：系统默认生成，可以自己指定，但在集合内不能重复。
+      insert：https://docs.mongodb.com/manual/reference/method/db.collection.insert/
+      insertOne：https://docs.mongodb.com/manual/reference/method/db.collection.insertOne/#db.collection.insertOne
+      insertMany：https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/#db.collection.insertMany
+   2：查询文档：find()、其他
+      find()：https://docs.mongodb.com/manual/reference/method/db.collection.find/#db.collection.find
+      query运算符：https://docs.mongodb.com/manual/reference/operator/query/#query-selectors
+   3：查询文档数量：db.collecitonName.find().count()
+   4：删除文档：deleteOne（）、deleteMany（）、remove()等
+      deleteOne：删除第一个匹配条件的文档，不能用于固定集合（capped collection），不会删除索引
+      https://docs.mongodb.com/manual/reference/method/db.collection.deleteOne/#db.collection.deleteOne
+      deleteMany：https://docs.mongodb.com/manual/reference/method/db.collection.deleteMany/#db.collection.deleteMany
+   5：更新文档：updateOne()、updateMany()、replaceOne()、update()等
+      更新操作符：https://docs.mongodb.com/manual/reference/operator/update/
+      updateOne：https://docs.mongodb.com/manual/reference/method/db.collection.updateOne/#db.collection.updateOne
+      updateMany：https://docs.mongodb.com/manual/reference/method/db.collection.updateMany/#db.collection.updateMany
+      replaceOne：替换整个文档内容，https://docs.mongodb.com/manual/reference/method/db.collection.replaceOne/#db.collection.replaceOne
+8：管理视图（View）：3.4版本后，支持从已有的集合和视图中创建只读属性的视图，可以看作是一种特殊的集合（只读）
+   1：创建视图：createview、createcollection、create
+      https://docs.mongodb.com/manual/core/views/
+   2：删除视图： db.collection.drop()
+   3：显示视图：db.getCollectionNames()、 db.getCollectionInfos() 
 
 
 
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+5：log命令：显示内存中日志最后一部分
+6：配置数据库用户账号和权限：
+   新增：createUser命令：例如：use admin
+   db.createUser({user:"testadmin",pwd:"test",roles:["readWrite", "dbAdmin"]})
+   删除：dropUser命令：例如：db.dropUser("testadmin")
+   显示：show users：显示所有用户
+   权限：每个数据库都把用户账号存储在集合system.users集合中。默认安装后会有admin数据库，需要创建用户管理员账户和数据库管理员账户。（用户管理员：创建和配置用户账号 数据库管理员：配置和管理数据库）
+   例如：use admin / db.createUser({user:"useradmin",pwd:"test",roles:["userAdminAnyDatabase"]})
+7：开启用户验证：关闭mongodb进程：kill -15 pid / mongod --config /home/mongodb/mongod_config.conf
+8：用户管理员登录：mongo --username "useradmin" --password "test" 127.0.0.1:28001/admin
+9：创建数据库管理员：use admin / db.createUser({user:"dbadmin",pwd:"test",roles:["readWriteAnyDatabase", "dbAdminAnyDatabase", "clusterAdmin"]})
+10：切换用户：use admin / db.auth("username", "pwd");
+11：数据库管理员登录：mongo --username "dbadmin" --password "test" 127.0.0.1:28001/admin
 
 
 -------------------------------------------------------------------------------------------------------
@@ -52,8 +140,6 @@ gpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc
     配置文件：/etc/mongod.conf
 11：配置远程连接：打开防火墙端口：27017
 12：创建管理员：启动mongdb，不使用验证（https://docs.mongodb.com/manual/tutorial/enable-authentication/#user-administrator）启动mongo shell：直接执行mongo即可进入shell（需要配置环境变量）输入db回车，显示当前所在的数据库。输入show dbs显示所有数据库
-13：
-14：
 
 
 -------------------------------------------------------------------------------------------------------
@@ -91,63 +177,6 @@ rest = true
 8：登录数据库：mongo --username "dbadmin" --password "test" 127.0.0.1:28001/admin
 9：可以开始操作
 
--------------------------------------------------------------------------------------------------------
-mongodb shell（客户端命令）：
-1：mongo命令：启动shell，位于安装目录下的bin目录下，例如：mongo 127.0.0.1:28001 / mongo -u username -p pwd ip:port/db
-2：use命令：切换当前数据库句柄，操作都是基于当前句柄上执行。例：use admin / use test
-3：show命令：显示信息。例如：show dbs：显示数据库列表
-4：exit命令：退出shell命令
-5：log命令：显示内存中日志最后一部分
-6：配置数据库用户账号和权限：
-   新增：createUser命令：例如：use admin
-   db.createUser({user:"testadmin",pwd:"test",roles:["readWrite", "dbAdmin"]})
-   删除：dropUser命令：例如：db.dropUser("testadmin")
-   显示：show users：显示所有用户
-   权限：每个数据库都把用户账号存储在集合system.users集合中。默认安装后会有admin数据库，需要创建用户管理员账户和数据库管理员账户。（用户管理员：创建和配置用户账号 数据库管理员：配置和管理数据库）
-   例如：use admin / db.createUser({user:"useradmin",pwd:"test",roles:["userAdminAnyDatabase"]})
-7：开启用户验证：关闭mongodb进程：kill -15 pid / mongod --config /home/mongodb/mongod_config.conf
-8：用户管理员登录：mongo --username "useradmin" --password "test" 127.0.0.1:28001/admin
-9：创建数据库管理员：use admin / db.createUser({user:"dbadmin",pwd:"test",roles:["readWriteAnyDatabase", "dbAdminAnyDatabase", "clusterAdmin"]})
-10：切换用户：use admin / db.auth("username", "pwd");
-11：数据库管理员登录：mongo --username "dbadmin" --password "test" 127.0.0.1:28001/admin
-12：管理数据库：
-    1：显示数据库列表：show dbs
-    2：切换数据库句柄：use dbname
-    3：创建数据库：use mydb / db.createCollection("myColl")
-    4：删除数据库：use mydb / db.dropDatabase();
-    5：查看数据库信息：db.stats()
-13：管理集合：
-    1：显示集合列表：show collections
-    2：创建集合：方式一：当数据被插入的时候，如果集合不存在，则创建。db.myNewCollection2.insertOne( { x: 1 } )db.myNewCollection3.createIndex( { y: 1 } )
-       方式二：显示创建（可指定集合参数）：createCollection(name, [options]) 
-    3：删除集合：方式1：db.collectionName.drop();  方式2：var coll = db.getColleciton("name"); / coll.drop();
-       (如果集合都删除了，则数据库也被删除)
-14：管理视图（View,3.4新增，只读视图）
-    1：简化逻辑
-
-
--------------------------------------------------------------------------------------------------------
-mongodb nodejs编程：
-1：引用：var MongoClient = require('mongodb').MongoClient
-2：数据库连接：
-        var url = "mongodb://" + username + ":" +pwd + "@" + ip + ":" + port + "/admin";
-        console.log(url);
-        MongoClient.connect(url, function (err, db) {
-                // 连接失败
-                if (err) {
-                    console.log(err);
-                    db.close();
-                    res.end("connect failed");
-                    return;
-                }
-                // 连接成功
-                console.log("Connected successfully to server");
-
-                // 关闭数据库
-                db.close();
-            }
-        )
-3：
 
 -------------------------------------------------------------------------------------------------------
 mongodb shell（脚本编程）：
@@ -160,12 +189,6 @@ mongodb shell（脚本编程）：
    方式二：使用命令mongo方式来执行： mongo abc.js def.js
    方式三：load函数
 
--------------------------------------------------------------------------------------------------------
-mongodb 基础元素：
-1：数据库（db） > 集合（coll） > 文档（doc）
-2：管理数据库，必须要有clusterAdmin权限的用户才可以。
-3：固定集合：capped collections（超过指定值则删除最老一条数据） 
-4：cursor对象：相当于一个指针（指向结果集/文档），可以通过迭代它来访问数据库中的一组对象
 
 
 
