@@ -32,7 +32,7 @@ dockerhub安装(robo3T)：
 
 
 -------------------------------------------------------------------------------------------------------
-mongodb Shell操作：
+mongodb 增删改查操作（CRUD）：
 1：数据库（database） > 集合（collection） > 文档（document） > Bson
 2：mongo命令：进入shell, 查看版本：db.version()， db命令：使用默认的test数据库
 3：use命令：切换当前数据库句柄，操作都是基于当前句柄上执行。例：use admin / use test，此事db变量则会指向当前数据库
@@ -78,11 +78,26 @@ mongodb Shell操作：
    2：删除视图： db.collection.drop()
    3：显示视图：db.getCollectionNames()、 db.getCollectionInfos() 
 
-
-
+-----------------------------------------------------------------------------------------------------------------------------------
+mongodb 聚合（Aggregation）：
+1：聚合：将多个文档中的值分组聚合在一起，并对分组数据执行各种操作，以返回一个结果。主要用于处理数据（(诸如统计平均值,求和等）
+2：聚合三种方式： aggregation pipeline、map-reduce function、 single purpose aggregation methods
+3：聚合管道（Aggregation Pipeline，流水线）：文档经过管道处理后，最后输出相应的结果。管道基本的功能有两个：一是对文档进行“过滤”，二是对文档进行  “变换”。管道的每一个阶段(stage)的输出结果是后一个阶段的输入。
+4：Map-Reduce：使用js函数进行map（映射）和reduce（化简）
+5：single purpose aggregation methods：简单的聚合：用在单个集合， db.collection.count() /   db.collection.distinct()
 
 ------------------------------------------------------------------------------------------------------------------------------
+mongodb 数据模型（Data Model）：
+1：相对传统型数据库来说，具有灵活的表结构，数据之间的关系可以用引用和嵌入两种方式表达。
+2：引用（References）：标准化的数据模型，通过ID来表达数据之间的关系，优点：可以避免嵌入重复的数据、
+   参考：https://docs.mongodb.com/manual/core/data-model-design/#data-modeling-referencing
+   案例：https://docs.mongodb.com/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/#data-modeling-publisher-and-books
+3：嵌入式（Embedded Data）：
+   参考：https://docs.mongodb.com/manual/core/data-model-design/#data-modeling-embedding
 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
 
 5：log命令：显示内存中日志最后一部分
 6：配置数据库用户账号和权限：
