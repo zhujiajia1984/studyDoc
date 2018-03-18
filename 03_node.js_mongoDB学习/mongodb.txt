@@ -1,5 +1,12 @@
 
 -------------------------------------------------------------------------------------------------------
+mongodb nodejs驱动（官网）：
+1：资料：http://mongodb.github.io/node-mongodb-native/
+2：
+
+
+
+-------------------------------------------------------------------------------------------------------
 官网资料：
 1：官网：https://www.mongodb.com/
 2：文档：https://docs.mongodb.com/
@@ -20,7 +27,7 @@ dockerhub安装(robo3T)：
 4：使用robo3T客户端连接mongodb数据库，并执行shell操作
 
 -------------------------------------------------------------------------------------------------------
-文档介绍：
+文档介绍（菜鸟教程 ）：
 1：文档value：bson值多种类型
 2：文档field字段名：不能重复
 3：文档field字段最大值：有索引的文档有最大值限制，1024个字节
@@ -89,16 +96,34 @@ mongodb 聚合（Aggregation）：
 ------------------------------------------------------------------------------------------------------------------------------
 mongodb 数据模型（Data Model）：
 1：相对传统型数据库来说，具有灵活的表结构，数据之间的关系可以用引用和嵌入两种方式表达。
-2：引用（References）：标准化的数据模型，通过ID来表达数据之间的关系，优点：可以避免嵌入重复的数据、
+2：引用（References）：标准化的数据模型，通过ID来表达数据之间的关系，优点：可以避免嵌入重复的数据（1对多）、树状结构
    参考：https://docs.mongodb.com/manual/core/data-model-design/#data-modeling-referencing
    案例：https://docs.mongodb.com/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/#data-modeling-publisher-and-books
-3：嵌入式（Embedded Data）：
+3：嵌入式（Embedded Data）：当有实体包含关系时（1对1），当子结构都属于父结点时（1对多）
    参考：https://docs.mongodb.com/manual/core/data-model-design/#data-modeling-embedding
+   案例：1对1关系：https://docs.mongodb.com/manual/tutorial/model-embedded-one-to-one-relationships-between-documents/#data-modeling-example-one-to-one  1对多关系：https://docs.mongodb.com/manual/tutorial/model-embedded-one-to-many-relationships-between-documents/#data-modeling-example-one-to-many
+4：模式验证（Schema Validation）：能够在插入和更新数据的时候进行表结构验证
+   1：创建和加入模式验证：createCollection()、 collMod命令、 
+   2：json模式验证：https://docs.mongodb.com/manual/core/schema-validation/
+5：数据模型建模的考虑因素：
+   1：Document Growth文档增长：push数组或者新增字段都会使文档增长。
+   2：Atomicity原子性：文档级别是原子操作，案例：https://docs.mongodb.com/manual/tutorial/model-data-for-atomic-operations/#data-modeling-atomic-operation
+   3：Sharding分片：
+   4：Indexes索引：
+   5：Large Number of Collections大量的集合群：日志使用
+   6：Collection Contains Large Number of Small Documents大量小文档的优化：考虑嵌入
+   7：Storage Optimization for Small Documents小文档存储优化：
 
+-----------------------------------------------------------------------------------------------------------------------------------
+mongodb 索引（indexes）
+1：定义：在集合层次定义索引（集合内唯一），支持任何字段和子字段进行索引
+2：创建索引：createIndex（），https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
+3：索引类型：单字段索引、复合索引（多字段）。。。：https://docs.mongodb.com/manual/indexes/#index-types
+4：索引属性：唯一索引（Unique Indexes）、。。。
+5：默认索引：_id为默认索引，
 
 
 -----------------------------------------------------------------------------------------------------------------------------------
-
 5：log命令：显示内存中日志最后一部分
 6：配置数据库用户账号和权限：
    新增：createUser命令：例如：use admin
