@@ -2,7 +2,8 @@
 -------------------------------------------------------------------------------------------------------
 mongodb nodejs驱动（官网）：
 1：资料：http://mongodb.github.io/node-mongodb-native/
-2：
+2：安装：npm install mongodb --save
+3：
 
 
 
