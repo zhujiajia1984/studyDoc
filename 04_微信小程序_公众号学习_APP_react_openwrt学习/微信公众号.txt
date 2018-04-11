@@ -11,6 +11,7 @@ APPID:wx65423a2f6908bc55
 多倍通Hi游吧+小程序（服务号认证）：
 18516748631@qq.com
 doublecom2017
+APPID：wxce49574d3d0dad43
 
 微信支付商户号
 1442784802

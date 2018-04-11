@@ -3,9 +3,81 @@
 mongodb nodejs驱动（官网）：
 1：资料：http://mongodb.github.io/node-mongodb-native/
 2：安装：npm install mongodb --save
+3：使用：
+
+// client.js
+const MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+
+// 客户管理
+module.exports = class Client {
+    constructor(url) {
+        this.url = url;
+    }
+
+    //
+    async addClient(name) {
+        const client = await MongoClient.connect(this.url);
+        const db = client.db("test");
+        let result = await db.collection('users').insertOne({ name: name });
+        assert.equal(1, result.insertedCount);
+        return client;
+    }
+}
+
+// router.js
+router.get('/addClient', function(req, res, next) {
+    let client = new Client(url);
+    client.addClient("234").then(client => {
+        client.close();
+        logger.info("add client success");
+        res.send("success");
+    }).catch(error => {
+        logger.error(error);
+        res.send(error);
+    })
+});
+
+-------------------------------------------------------------------------------------------------------
+Mongo 脚本编程（shell js）
+1：参考：https://docs.mongodb.com/manual/tutorial/write-scripts-for-the-mongo-shell/#opening-new-connections
+2：let conn = new Mongo("mongodb_mongodb_1:27017");
+let db = conn.getDB("client");
+db.adminCommand('listDatabases');
+使用mongo进入shell
+使用load("/data/db/js/sss.js")：载入js文件，不能载入两次，必须先退出再进入后再次载入
+
+
+-------------------------------------------------------------------------------------------------------
+Mongodb 分页实现：
+1：参考：https://docs.mongodb.com/manual/reference/method/cursor.skip/index.html
+2：实现方式一：使用skip和limit，数据量不大情况下使用，性能不好。
+3：实现方式二：使用find和limit，需要做索引。
+   例：let cursor = await db.collection('client').find({})
+                .sort("lastModified", -1)
+                .limit(pageSize);
+            if (current > 1) {
+                for (let i = 1; i < current; i++) {
+                    // 游标移动到底
+                    while (await cursor.hasNext()) {
+                        let tmp = await cursor.next();
+                        lastValue = tmp.lastModified;
+                    }
+                    // 获取下一页数据
+                    cursor = await db.collection('client').find({
+                            lastModified: { $lt: new Date(lastValue) }
+                        })
+                        .sort("lastModified", -1)
+                        .limit(pageSize);
+                }
+            }
+            let r = await cursor.toArray();
+
+-------------------------------------------------------------------------------------------------------
+Mongodb 查询耗时分析（诊断工具）：
+1：参考：https://docs.mongodb.com/manual/reference/explain-results/index.html
+2：方式：explain方法，可采用 db.collection.explain()、 cursor.explain() 和command命令三种方式
 3：
-
-
 
 -------------------------------------------------------------------------------------------------------
 官网资料：
@@ -70,6 +142,7 @@ mongodb 增删改查操作（CRUD）：
    2：查询文档：find()、其他
       find()：https://docs.mongodb.com/manual/reference/method/db.collection.find/#db.collection.find
       query运算符：https://docs.mongodb.com/manual/reference/operator/query/#query-selectors
+      模糊查询：$regex运算符
    3：查询文档数量：db.collecitonName.find().count()
    4：删除文档：deleteOne（）、deleteMany（）、remove()等
       deleteOne：删除第一个匹配条件的文档，不能用于固定集合（capped collection），不会删除索引
@@ -122,6 +195,8 @@ mongodb 索引（indexes）
 3：索引类型：单字段索引、复合索引（多字段）。。。：https://docs.mongodb.com/manual/indexes/#index-types
 4：索引属性：唯一索引（Unique Indexes）、。。。
 5：默认索引：_id为默认索引，
+6：删除索引：dropIndex（创建时指定名字，则删除可按照名字来删除，否则通过getindexes查看名称），dropIndexes
+7：获取索引：getindexes
 
 
 -----------------------------------------------------------------------------------------------------------------------------------
