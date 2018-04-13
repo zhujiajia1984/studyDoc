@@ -61,7 +61,7 @@ volumes：在services下面，挂载数据卷或者主机目录，（注意必须version:3.2才能不报错
 
 
 -----------------------------------------------------------------------------------------------
-创建自己的Image（Dockfile）
+创建自己的Image（Dockfile）帮助命令：docker build -h
 1：创建.txt文件，并使用sublimeText的dockerfile高亮插件并选择dockerfile格式；
 2：在一个新的目录中：docker build -f ./base.txt -t base:latest --no-cache .
    docker build -f ./nodejs.txt -t nodejs .
