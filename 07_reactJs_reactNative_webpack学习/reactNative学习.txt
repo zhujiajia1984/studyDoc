@@ -1,0 +1,93 @@
+
+-----------------------------------------------------------------------------------------
+使用方法：
+1：adb devices查看设备（查看模拟器或者真机是否上线）
+2：react-native run-android
+3：模拟器开发者菜单：ctrl+m
+4：执行react-native init testApp初始化项目
+5：package.json："debug": "node node_modules/react-native/local-cli/cli.js run-android"
+6：双击R即可刷新页面
+7： 真机调试：长按返回键进入开发者菜单
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+基本内置组件：
+1：基本组件：View、Text、Image、TextInput、ScrollView、Button
+2：界面组件：Picker（类似下拉选择）、Slider（滑动进度选择）、Switch（开关）
+3：列表（ListViews）：FlatList（普通列表），SectionList（分段列表）
+4：IOS组件/Android组件/：
+source={{uri: DEFAULT_URL}
+5：WebView组件：加载html文件
+6：Platform组件或者分两个文件：判断是ios还是andriod，并能够判断版本号。分文件：.ios/android
+   参考：https://facebook.github.io/react-native/docs/platform-specific-code.html
+7：React Navigation导航组件：参考：https://reactnavigation.org/docs/intro/
+
+-----------------------------------------------------------------------------------------
+自定义字体ICON：
+根据npm网上教程安装react-native-vector-icons：：
+1：修改android/app/build.gradle
+   project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
+]
+ 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+2：下载ttf字体文件，并放置到项目的node_modules\react-native-vector-icons\Fonts
+3：新增JS文件：node_modules\react-native-vector-icons目录下
+4：新增JSON文件：D:\Project\react\reactNative\myapp\node_modules\react-native-vector-icons\glyphmaps
+   key随便定义，value为图标的utf16进制转化的数字值
+5：重新react-native run-android
+6：使用：
+   import CustomizeIcon from 'react-native-vector-icons/CustomizeIcon';
+   <CustomizeIcon name="gongneng" size={24} color="red"></CustomizeIcon>
+
+-----------------------------------------------------------------------------------------
+adb端口被占问题：
+系统环境变量设置：
+ANDROID_ADB_SERVER_PORT
+50370
+-----------------------------------------------------------------------------------------
+
+真机调试：
+1：环境变量配置：D:\androidStudio\sdk\tools;D:\androidStudio\sdk\platform-tools
+adb devices查看设备
+2：之后参考：http://reactnative.cn/docs/0.47/running-on-device-android.html#content
+3：小米手机无法调试时，需要在开发者选项中，关闭最后的一项：miui优化并重启手机即可。
+
+
+-----------------------------------------------------------------------------------------
+命令行启动：
+1：模拟器：cd \androidStudio\sdk\tools\         emulator -avd myavd   
+环境变量：
+D:\androidStudio\sdk
+D:\androidStudio\sdk\platform-tools
+D:\androidStudio\sdk\tools
+
+
+-----------------------------------------------------------------------------------------
+andriod本地模拟器环境搭建
+1：所需环境：Node, the React Native command line interface, Python2, a JDK, and Android Studio
+2：安装环境：https://facebook.github.io/react-native/docs/getting-started.html
+3：打开模拟器(d:  
+cd \androidStudio\sdk\tools\
+emulator -avd myavd)
+   先运行如下步骤：https://stackoverflow.com/questions/44446523/unable-to-load-script-from-assets-index-android-bundle-on-windows
+4：初始化项目：react-native init testApp
+5：运行项目：
+   1：cd testApp
+   2：打开模拟器
+   3: 执行命令：react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+   4：react-native run-android
+
+6：真机运行：Running On Device：http://facebook.github.io/react-native/releases/0.47/docs/running-on-device.html#1-enable-app-transport-security
+   需要在权限中，把悬浮窗权限打开后才能看到文字。
+
+7：唤起开发菜单：ctrl + M
+AppRegistry：告诉rn哪个是整个程序的根组件，第一个参数必须为项目名称，第二个参数为组件名
+
+
+
+

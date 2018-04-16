@@ -1,0 +1,46 @@
+C:\Users\zjj\AppData\Roaming\npm
+D:\Program Files\nodejs\node_modules\npm
+-------------------------------------------------------------------------------------------
+webpack：module bundler：模块打包工具（构建工具，默认只打包js文件）：
+1：模块化：支持 commonjs和 amd标准，打包并压缩成一个JS文件（所有文件类型都可以打包）
+2：加快加载速度：分模块打包
+3：使用最新的技术（es6, jsx, commonjs，npm）
+4：git bash 环境运行：/d/'Program Files'/nodejs/npm run bundler
+
+
+-------------------------------------------------------------------------------------------
+安装：
+1：本地安装：npm install --save-dev webpack
+2：运行方式：
+   1：通过npm方式运行
+   "scripts": {
+    "bundler": "webpack"
+     }
+     npm run bundler
+   2：通过命令方式
+   node_modules/.bin/webpack
+
+-------------------------------------------------------------------------------------------
+调试工具（source map）：
+https://doc.webpack-china.org/guides/development/
+devtool: 'inline-source-map',   // 内建的sourcemap，用于调试，不用于生产环境
+
+-------------------------------------------------------------------------------------------
+打包css文件（loader)：
+1：安装包：npm install --save-dev style-loader css-loader
+2：打包CSS：https://webpack.js.org/guides/asset-management/
+
+-------------------------------------------------------------------------------------------
+实时更新代码和页面（webpack-dev-server)：
+1：参考文档：https://doc.webpack-china.org/guides/development/
+2：安装包：npm install --save-dev webpack-dev-server
+3：修改配置文件
+
+{ "presets": ["react","es2015"] }
+
+
+-------------------------------------------------------------------------------------------
+代码压缩：
+UglifyJsPlugin：使用uglify-js的版本，来自于webpack内置控件，基于webpack的版本，不能改变版本。
+UglifyjsWebpackPlugin：使用uglify-js的版本，基于项目安装的版本。
+
