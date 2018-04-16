@@ -36,6 +36,9 @@ appsecret：fecd688110e195c4ea0e9f3d97797d44
 微信支付商户号：
 1442452802
 
+微信支付操作密码：
+a-62141609
+
 智企云小程序：
 zhujiajia@weichitech.cn
 gm135
