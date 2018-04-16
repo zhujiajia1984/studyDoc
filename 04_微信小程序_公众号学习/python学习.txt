@@ -1,7 +1,0 @@
-
---------------------------------------------------------------------------------------------------------------------------
-1：建立数据库：python manage.py runserver后查看（python manage.py migrate）
-2：创建用户：python.exe .\manage.py createsuperuser
-3：运行程序：python manage.py runserver
-路由文件：urls.py
-配置文件：setting.py（添加对应目录）
