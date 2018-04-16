@@ -6,6 +6,13 @@
 4：坑：https://niuhp.com/other/https-certbot.html
 5：查看帮助：certbot --help all  或 certbot --help
 6：生成证书（手动模式）：
-   certbot certonly --manual
+   参考：https://certbot.eff.org/docs/using.html#manual
    自己在指定url中生成文件并填充内容
+   1：手动模式：certbot certonly --manual
+   2：输入主机名称：wechat.weiquaninfo.cn
+   3：yes
+   4：根据提示创建文件和内容，放入http的web服务中，并回车
+   5：根据提示找到文件
+   6：nginx配置
+
 7：更新证书（2018-06-04）：https://certbot.eff.org/docs/using.html#re-creating-and-updating-existing-certificates
