@@ -2,8 +2,23 @@
 nginx传递http header：
 1：官网参考：http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_set_header
    express官网：http://expressjs.com/en/guide/behind-proxies.html
-2：其他参考：https://blog.csdn.net/bao19901210/article/details/52537279
+2：其他参考：
+   https://blog.csdn.net/bigtree_3721/article/details/72820081
+   https://blog.csdn.net/bao19901210/article/details/52537279
    https://segmentfault.com/a/1190000005797170
+
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $remote_addr;
+proxy_set_header X-Forwarded-Host $remote_addr;
+
+
+---------------------------------------------------------------------------------
+nginx的websocket传输：
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+
 
 
 ---------------------------------------------------------------------------------
