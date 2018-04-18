@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------
+nginx传递http header：
+1：官网参考：http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_set_header
+   express官网：http://expressjs.com/en/guide/behind-proxies.html
+2：其他参考：https://blog.csdn.net/bao19901210/article/details/52537279
+   https://segmentfault.com/a/1190000005797170
+
+
+---------------------------------------------------------------------------------
 安装nginx：
 1：参考：http://nginx.org/en/linux_packages.html
    yum配置文件：/etc/yum.repos.d/nginx.repo
