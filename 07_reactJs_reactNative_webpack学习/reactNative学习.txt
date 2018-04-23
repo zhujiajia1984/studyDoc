@@ -1,4 +1,4 @@
-
+https://github.com/zhujiajia1984/reactApp_myapp.git
 -----------------------------------------------------------------------------------------
 使用方法：
 1：adb devices查看设备（查看模拟器或者真机是否上线）
@@ -75,12 +75,15 @@ andriod本地模拟器环境搭建
 cd \androidStudio\sdk\tools\
 emulator -avd myavd)
    先运行如下步骤：https://stackoverflow.com/questions/44446523/unable-to-load-script-from-assets-index-android-bundle-on-windows
-4：初始化项目：react-native init testApp
+4：初始化项目
+   1：npm config set registry=http://registry.npm.taobao.org/（npm config list查看效果）
+   react-native init testApp
 5：运行项目：
    1：cd testApp
    2：打开模拟器
    3: 执行命令：react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
    4：react-native run-android
+   5：保证babel-preset-react-native的版本是4.0.0不是5.0.0，否则要报错
 
 6：真机运行：Running On Device：http://facebook.github.io/react-native/releases/0.47/docs/running-on-device.html#1-enable-app-transport-security
    需要在权限中，把悬浮窗权限打开后才能看到文字。
