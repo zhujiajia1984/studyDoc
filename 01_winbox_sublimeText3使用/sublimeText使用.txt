@@ -11,6 +11,8 @@
    npm install -g eslint-plugin-react
    npm install -g eslint-plugin-import
    npm install -g babel-eslint
+9：快捷键：React ES6 Snippets
+10：文件路径提示：autofilename
 
 
 
